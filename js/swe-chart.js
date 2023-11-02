@@ -1,7 +1,7 @@
 /** Class representing the line chart view. */
-class DensityChart {
+class SweChart {
     /**
-     * Creates a DensityChart
+     * Creates a SWEChart
      * @param globalApplicationState The shared global application state (has the data and map instance in it)
      */
     constructor(globalApplicationState) {
@@ -13,7 +13,7 @@ class DensityChart {
             width = 700 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
-        const svg = d3.select("#density-chart")
+        const svg = d3.select("#swe-chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -25,7 +25,7 @@ class DensityChart {
             .attr("y", 10) // Adjust the y-coordinate to position the title vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "24px") // Adjust the font size as needed
-            .text("Snow Density"); // Replace with your desired title text
+            .text("Snow Water Equivalent (SWE)"); // Replace with your desired title text
 
         // Create x-axis label
         svg.append("text")
@@ -35,16 +35,16 @@ class DensityChart {
             .attr("font-size", "14px") // Adjust the font size as needed
             .text("Time (UTC) - Dec 17 2020"); // Replace with your x-axis label text
 
-// Create y-axis label
+        // Create y-axis label
         svg.append("text")
             .attr("transform", "rotate(-90)") // Rotate the label to be vertical
             .attr("x", -250) // Adjust the x-coordinate to center the label as needed
             .attr("y", -40) // Adjust the y-coordinate to position the label vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "14px") // Adjust the font size as needed
-            .text("Density (kg/m^3)"); // Replace with your y-axis label text
+            .text("SWE (mm)"); // Replace with your y-axis label text
 
-// Add X axis --> it is a date format
+        // Add X axis --> it is a date format
         const x = d3.scaleTime()
             .domain(d3.extent(data, d => d.Time))
             .range([0, width]);
@@ -54,7 +54,7 @@ class DensityChart {
 
         // Add Y axis
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => +d.Density)])
+            .domain([0, d3.max(data, d => +d.SWE)])
             .range([height, 0]);
         const yAxis = svg.append("g")
             .call(d3.axisLeft(y));
@@ -81,7 +81,7 @@ class DensityChart {
         const areaGenerator = d3.area()
             .x(d => x(d.Time))
             .y0(y(0))
-            .y1(d => y(d.Density))
+            .y1(d => y(d.SWE))
 
         // Add the area
         area.append("path")

@@ -19,6 +19,7 @@ const globalApplicationState = {
   DEIDData: null,
   CLNData: null,
   densityChart: null,
+  SweChart: null,
 };
 
 
@@ -33,7 +34,9 @@ loadData().then((loadedData) => {
 
   // Creates the view objects with the global state passed in 
   const densityChart = new DensityChart(globalApplicationState);
+  const sweChart = new SweChart(globalApplicationState);
 
   globalApplicationState.densityChart = densityChart;
+  globalApplicationState.SWEChart = sweChart;
 
 });
