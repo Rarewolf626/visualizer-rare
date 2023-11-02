@@ -7,5 +7,5 @@ Created on Wed Nov  1 17:01:00 2023
 
 import pandas as pd
 deid = pd.read_csv("DEID_raw.csv", index_col=0)
-deid["SnowAccRate"] = deid["SnowAcc"].diff()
+deid["SnowAccRate"] = deid["SnowAcc"].diff(periods=60)
 deid.to_csv("DEID.csv")
