@@ -93,9 +93,17 @@ class AccChart {
             .attr("stroke-width", 1)
             .attr("d", areaGenerator)
 
+        // Scatterplot of accumulation rate
+        area.selectAll("circle")
+            .data(data)
+            .join("circle")
+            .attr("cx", d => x(d.Time))
+            .attr("cy", d => y(d.SnowAccRate))
+            .attr("r", 1)
+            .style("fill", "steelblue");
+
         // Add the brushing
-        area
-            .append("g")
+        area.append("g")
             .attr("class", "brush")
             .call(brush);
 
@@ -121,13 +129,18 @@ class AccChart {
                 area.select(".brush").call(brush.move, null) // This remove the grey brush area as soon as the selection has been done
             }
 
-            // Update axis and area position
+            // Update axis and area, circle position
             xAxis.transition().duration(1000).call(d3.axisBottom(x))
             area
                 .select('.myArea')
                 .transition()
                 .duration(1000)
                 .attr("d", areaGenerator)
+            area
+                .selectAll("circle")
+                .transition().duration(1000)
+                .attr("cx", function (d) { return x(d.Time); } )
+                .attr("cy", function (d) { return y(d.SnowAccRate); } )
         }
 
         // If user double click, reinitialize the chart
@@ -138,6 +151,11 @@ class AccChart {
                 .select('.myArea')
                 .transition()
                 .attr("d", areaGenerator)
+            area
+                .selectAll("circle")
+                .transition()
+                .attr("cx", function (d) { return x(d.Time); } )
+                .attr("cy", function (d) { return y(d.SnowAccRate); } )
         });
     }
 }
