@@ -1,22 +1,18 @@
 /** Class representing the line chart view. */
-class DensityChart {
+class DensityHeightChart {
     /**
-     * Creates a DensityChart
+     * Creates an AccChart
      * @param globalApplicationState The shared global application state (has the data and map instance in it)
      */
     constructor(globalApplicationState) {
-        // Set some class level variables
         this.globalApplicationState = globalApplicationState;
         const data = globalApplicationState.DEIDData
-        if (globalApplicationState.brushedRange != null){
-            const data = globalApplicationState.brushedRange
-        }
 
         const margin = {top: 70, right: 70, bottom: 70, left: 70},
             width = 700 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
-        const svg = d3.select("#density-chart")
+        const svg = d3.select("#dh-chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -28,7 +24,7 @@ class DensityChart {
             .attr("y", -20) // Adjust the y-coordinate to position the title vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "24px") // Adjust the font size as needed
-            .text("Snow Density"); // Replace with your desired title text
+            .text("Vertical Density Profile"); // Replace with your desired title text
 
         // Create x-axis label
         svg.append("text")
@@ -36,31 +32,32 @@ class DensityChart {
             .attr("y", 410) // Adjust the y-coordinate to position the label vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "14px") // Adjust the font size as needed
-            .text("Time (UTC) - Dec 17 2020"); // Replace with your x-axis label text
+            .text("Density (kg/m^3)"); // Replace with your x-axis label text
 
-// Create y-axis label
+        // Create y-axis label
         svg.append("text")
-            .attr("transform", "rotate(-90)") // Rotate the label to be vertical
-            .attr("x", -180) // Adjust the x-coordinate to center the label as needed
-            .attr("y", -40) // Adjust the y-coordinate to position the label vertically
+            .attr("transform", "rotate(90)") // Rotate the label to be vertical
+            .attr("x", 180) // Adjust the x-coordinate to center the label as needed
+            .attr("y", -600) // Adjust the y-coordinate to position the label vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "14px") // Adjust the font size as needed
-            .text("Density (kg/m^3)"); // Replace with your y-axis label text
+            .text("Height (in)"); // Replace with your y-axis label text
 
-// Add X axis --> it is a date format
-        const x = d3.scaleTime()
-            .domain(d3.extent(data, d => d.Time))
-            .range([0, width]);
+        // Add X axis --> it is a date format
+        const x = d3.scaleLinear()
+            .domain(d3.extent(data, d => d.Density))
+            .range([width, 0]);
         const xAxis = svg.append("g")
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x));
 
         // Add Y axis
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => +d.Density)])
+            .domain([0, d3.max(data, d => +d.SnowAcc)])
             .range([height, 0]);
         const yAxis = svg.append("g")
-            .call(d3.axisLeft(y));
+            .attr('transform', 'translate(' + width + ', 0)') // Move it to the right side
+            .call(d3.axisRight(y));
 
         // Add a clipPath: everything out of this area won't be drawn.
         const clip = svg.append("defs").append("clipPath")
@@ -72,7 +69,7 @@ class DensityChart {
             .attr("y", 0);
 
         // Add brushing
-        const brush = d3.brushX()                   // Add the brush feature using the d3.brush function
+        const brush = d3.brushY()                   // Add the brush feature using the d3.brush function
             .extent([[0, 0], [width, height]])  // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
             .on("end", updateChart)               // Each time the brush selection changes, trigger the 'updateChart' function
 
@@ -82,9 +79,9 @@ class DensityChart {
 
         // Create an area generator
         const areaGenerator = d3.area()
-            .x(d => x(d.Time))
-            .y0(y(0))
-            .y1(d => y(d.Density))
+            .x0(x(0))
+            .x1(d => x(d.Density))
+            .y(d => y(d.SnowAcc))
 
         // Add the area
         area.append("path")
@@ -111,21 +108,20 @@ class DensityChart {
 
         // A function that update the chart for given boundaries
         function updateChart(event) {
-
             // What are the selected boundaries?
             const extent = event.selection
 
             // If no selection, back to initial coordinate. Otherwise, update X axis domain
             if (!extent) {
                 if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
-                x.domain([4, 8])
+                y.domain([4, 8])
             } else {
-                x.domain([x.invert(extent[0]), x.invert(extent[1])])
+                y.domain([y.invert(extent[1]), y.invert(extent[0])])
                 area.select(".brush").call(brush.move, null) // This remove the grey brush area as soon as the selection has been done
             }
 
             // Update axis and area position
-            xAxis.transition().duration(1000).call(d3.axisBottom(x))
+            yAxis.transition().duration(1000).call(d3.axisRight(y))
             area
                 .select('.myArea')
                 .transition()
@@ -135,8 +131,8 @@ class DensityChart {
 
         // If user double click, reinitialize the chart
         svg.on("dblclick", function () {
-            x.domain(d3.extent(data, d => d.Time))
-            xAxis.transition().call(d3.axisBottom(x))
+            y.domain(d3.extent(data, d => +d.SnowAcc))
+            yAxis.transition().call(d3.axisRight(y))
             area
                 .select('.myArea')
                 .transition()

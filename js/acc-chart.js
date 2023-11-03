@@ -8,8 +8,11 @@ class AccChart {
         // Set some class level variables
         this.globalApplicationState = globalApplicationState;
         const data = globalApplicationState.DEIDData
+        if (globalApplicationState.brushedRange != null){
+            const data = globalApplicationState.brushedRange
+        }
 
-        const margin = {top: 10, right: 30, bottom: 70, left: 70},
+        const margin = {top: 70, right: 70, bottom: 70, left: 70},
             width = 700 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
@@ -21,28 +24,37 @@ class AccChart {
             .attr("transform", `translate(${margin.left},${margin.top})`)
 
         const title = svg.append("text")
-            .attr("x", 300) // Adjust the x-coordinate to center the title as needed
-            .attr("y", 10) // Adjust the y-coordinate to position the title vertically
+            .attr("x", 315) // Adjust the x-coordinate to center the title as needed
+            .attr("y", -20) // Adjust the y-coordinate to position the title vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "24px") // Adjust the font size as needed
             .text("Snow Accumulation"); // Replace with your desired title text
 
         // Create x-axis label
         svg.append("text")
-            .attr("x", 300) // Adjust the x-coordinate to center the label as needed
-            .attr("y", 475) // Adjust the y-coordinate to position the label vertically
+            .attr("x", 315) // Adjust the x-coordinate to center the label as needed
+            .attr("y", 410) // Adjust the y-coordinate to position the label vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "14px") // Adjust the font size as needed
             .text("Time (UTC) - Dec 17 2020"); // Replace with your x-axis label text
 
-// Create y-axis label
+        // Create left y-axis label
         svg.append("text")
             .attr("transform", "rotate(-90)") // Rotate the label to be vertical
-            .attr("x", -250) // Adjust the x-coordinate to center the label as needed
+            .attr("x", -180) // Adjust the x-coordinate to center the label as needed
             .attr("y", -40) // Adjust the y-coordinate to position the label vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "14px") // Adjust the font size as needed
-            .text("Accumulation (mm)"); // Replace with your y-axis label text
+            .text("Accumulation (in)"); // Replace with your y-axis label text
+
+        // Create right y-axis label
+        svg.append("text")
+            .attr("transform", "rotate(90)") // Rotate the label to be vertical
+            .attr("x", 180) // Adjust the x-coordinate to center the label as needed
+            .attr("y", -600) // Adjust the y-coordinate to position the label vertically
+            .attr("text-anchor", "middle") // Center the text horizontally
+            .attr("font-size", "14px") // Adjust the font size as needed
+            .text("Rate (in/min)"); // Replace with your y-axis label text
 
 // Add X axis --> it is a date format
         const x = d3.scaleTime()
@@ -58,6 +70,14 @@ class AccChart {
             .range([height, 0]);
         const yAxis = svg.append("g")
             .call(d3.axisLeft(y));
+
+        // Add second Y axis
+        const y2 = d3.scaleLinear()
+            .domain([0, d3.max(data, d => +d.SnowAccRate)])
+            .range([height, 0]);
+        const y2Axis = svg.append("g")
+            .attr('transform', 'translate(' + width + ', 0)') // Move it to the right side
+            .call(d3.axisRight(y2));
 
         // Add a clipPath: everything out of this area won't be drawn.
         const clip = svg.append("defs").append("clipPath")
@@ -98,8 +118,8 @@ class AccChart {
             .data(data)
             .join("circle")
             .attr("cx", d => x(d.Time))
-            .attr("cy", d => y(d.SnowAccRate))
-            .attr("r", 1)
+            .attr("cy", d => y2(d.SnowAccRate))
+            .attr("r", 2)
             .style("fill", "steelblue");
 
         // Add the brushing
@@ -116,10 +136,8 @@ class AccChart {
 
         // A function that update the chart for given boundaries
         function updateChart(event) {
-
             // What are the selected boundaries?
             const extent = event.selection
-
             // If no selection, back to initial coordinate. Otherwise, update X axis domain
             if (!extent) {
                 if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
@@ -140,7 +158,7 @@ class AccChart {
                 .selectAll("circle")
                 .transition().duration(1000)
                 .attr("cx", function (d) { return x(d.Time); } )
-                .attr("cy", function (d) { return y(d.SnowAccRate); } )
+                .attr("cy", function (d) { return y2(d.SnowAccRate); } )
         }
 
         // If user double click, reinitialize the chart
@@ -155,7 +173,7 @@ class AccChart {
                 .selectAll("circle")
                 .transition()
                 .attr("cx", function (d) { return x(d.Time); } )
-                .attr("cy", function (d) { return y(d.SnowAccRate); } )
+                .attr("cy", function (d) { return y2(d.SnowAccRate); } )
         });
     }
 }
