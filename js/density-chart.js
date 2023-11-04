@@ -38,7 +38,7 @@ class DensityChart {
             .attr("font-size", "14px") // Adjust the font size as needed
             .text("Time (UTC) - Dec 17 2020"); // Replace with your x-axis label text
 
-// Create y-axis label
+        // Create y-axis label
         svg.append("text")
             .attr("transform", "rotate(-90)") // Rotate the label to be vertical
             .attr("x", -180) // Adjust the x-coordinate to center the label as needed
@@ -47,7 +47,7 @@ class DensityChart {
             .attr("font-size", "14px") // Adjust the font size as needed
             .text("Density (kg/m^3)"); // Replace with your y-axis label text
 
-// Add X axis --> it is a date format
+        // Add X axis --> it is a date format
         const x = d3.scaleTime()
             .domain(d3.extent(data, d => d.Time))
             .range([0, width]);

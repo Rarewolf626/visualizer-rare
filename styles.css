@@ -13,12 +13,17 @@
 .row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .deid-chart {
     margin: auto;
     width: 700px;
     height: 500px;
+}
+
+.toggle {
+    margin: auto;
 }
 
 .cursor-text {

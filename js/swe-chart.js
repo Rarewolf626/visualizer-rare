@@ -11,6 +11,7 @@ class SweChart {
         if (globalApplicationState.brushedRange != null){
             const data = globalApplicationState.brushedRange
         }
+
         const margin = {top: 70, right: 70, bottom: 70, left: 70},
             width = 700 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
