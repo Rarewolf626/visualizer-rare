@@ -45,7 +45,7 @@ class DensityHeightChart {
 
         // Add X axis --> it is a date format
         const x = d3.scaleLinear()
-            .domain(d3.extent(data, d => d.Density))
+            .domain([0, d3.max(data, d => +d.Density)])
             .range([width, 0]);
         const xAxis = svg.append("g")
             .attr("transform", `translate(0,${height})`)
