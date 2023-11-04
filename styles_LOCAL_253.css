@@ -5,46 +5,27 @@
 }
 
 .header {
-    width: 500px;
+    width: 600px;
     text-align: center;
-    margin: auto auto 10px;
-    border-style: solid;
+    margin: auto auto 50px;
 }
 
-.row1 {
-    background-color: rgba(0, 0, 0, 0.1); /* Adjust the alpha value (0.5 in this example) for the desired opacity */
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5px; /* Add some padding to give space around the text */
-    border-style: solid;
-    margin: auto auto 10px;
-}
-
-.row2 {
+.row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 5px; /* Add some padding to give space around the text */
-    border-style: solid;
 }
 
 .deid-chart {
-    margin: auto auto;
+    margin: auto;
     width: 700px;
     height: 500px;
-    border-style: solid;
-    border-width: 1px;
 }
 
 .toggle {
     margin: auto;
 }
 
-.video {
-    border-style: solid;
-    border-width: 1px;
-    margin: auto;
-}
 .cursor-text {
     font-family: Roboto, sans-serif;
     font-size: 14px;

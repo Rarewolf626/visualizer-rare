@@ -15,6 +15,9 @@
     background-color: rgba(0, 0, 0, 0.1); /* Adjust the alpha value (0.5 in this example) for the desired opacity */
     display: flex;
     flex-wrap: wrap;
+<<<<<<< HEAD
+    justify-content: center;
+=======
     padding: 5px; /* Add some padding to give space around the text */
     border-style: solid;
     margin: auto auto 10px;
@@ -23,9 +26,9 @@
 .row2 {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     padding: 5px; /* Add some padding to give space around the text */
     border-style: solid;
+>>>>>>> 39f97bfcfc95a8cccd774b56ca53d25473fafac0
 }
 
 .deid-chart {
@@ -36,15 +39,18 @@
     border-width: 1px;
 }
 
+<<<<<<< HEAD
 .toggle {
     margin: auto;
 }
 
+=======
 .video {
     border-style: solid;
     border-width: 1px;
     margin: auto;
 }
+>>>>>>> 39f97bfcfc95a8cccd774b56ca53d25473fafac0
 .cursor-text {
     font-family: Roboto, sans-serif;
     font-size: 14px;
