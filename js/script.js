@@ -21,7 +21,8 @@ const globalApplicationState = {
     densityChart: null,
     sweChart: null,
     accChart: null,
-    densityHeightChart: null
+    densityHeightChart: null,
+    video: null
 };
 
 
@@ -40,10 +41,12 @@ loadData().then((loadedData) => {
     const accChart = new AccChart(globalApplicationState);
     const densityHeightChart = new DensityHeightChart(globalApplicationState)
     // const cursor = new Cursor()
+    const video = new Video()
 
     globalApplicationState.densityChart = densityChart;
     globalApplicationState.sweChart = sweChart;
     globalApplicationState.accChart = accChart;
     globalApplicationState.densityHeightChart = densityHeightChart;
+    globalApplicationState.video = video;
 
 });
