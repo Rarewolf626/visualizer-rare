@@ -19,12 +19,8 @@ const globalApplicationState = {
     accVar: "SnowAcc",
     rateVar: "SnowAccRate",
     accChart: null,
-<<<<<<< HEAD
     sweChart: null
-=======
-    densityHeightChart: null,
-    video: null
->>>>>>> 39f97bfcfc95a8cccd774b56ca53d25473fafac0
+    // video: null
 };
 
 //******* APPLICATION MOUNTING *******
@@ -37,21 +33,18 @@ loadData().then((loadedData) => {
     globalApplicationState.CLNData = loadedData.CLNData;
 
     // Creates the view objects with the global state passed in
-    const densityHeightChart = new DensityHeightChart(globalApplicationState)
+    const densityHeightChart = new DensityHeightChart(globalApplicationState);
     const densityChart = new DensityChart(globalApplicationState);
     const accChart = new AccChart(globalApplicationState);
     const sweChart = new SweChart(globalApplicationState);
     // const cursor = new Cursor()
-    const video = new Video()
+    // const video = new Video();
 
     globalApplicationState.densityHeightChart = densityHeightChart;
-<<<<<<< HEAD
     globalApplicationState.densityChart = densityChart;
     globalApplicationState.accChart = accChart;
     globalApplicationState.sweChart = sweChart;
-=======
-    globalApplicationState.video = video;
->>>>>>> 39f97bfcfc95a8cccd774b56ca53d25473fafac0
+    // globalApplicationState.video = video;
 
     // Attach event listeners to the toggles
     document.getElementById("acc_data").onchange = changeAccData;

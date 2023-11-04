@@ -5,9 +5,9 @@ class Video {
      */
     constructor(globalApplicationState) {
         const svg = d3.select('#video')
-            .append('svg')
-            .attr('width', width)
-            .attr('height', height);
+            .append('svg');
+            // .attr('width', width)
+            // .attr('height', height);
 
 // Append a foreignObject element to the SVG
         const foreignObject = svg.append('foreignObject')
