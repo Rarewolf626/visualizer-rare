@@ -174,8 +174,7 @@ class SweChart {
                 .selectAll("circle")
                 .transition()
                 .attr("cx", function (d) { return x(d.Time); } )
-                .attr("cy", function (d) { return y2(d.SnowAccRate); } )
-
+                .attr("cy", function (d) { return y2(d.SWEAccRate); } )
         });
     }
 }
