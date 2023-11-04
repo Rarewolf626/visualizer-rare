@@ -24,7 +24,7 @@ class DensityHeightChart {
             .attr("y", -20) // Adjust the y-coordinate to position the title vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "24px") // Adjust the font size as needed
-            .text("Vertical Density Profile"); // Replace with your desired title text
+            .text("DEID: Vertical Density Profile"); // Replace with your desired title text
 
         // Create x-axis label
         svg.append("text")
