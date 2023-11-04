@@ -1,13 +1,14 @@
 /** Class representing the line chart view. */
-class SweChart {
+class MetChart {
     /**
-     * Creates a SWEChart
+     * Creates a MetChart
      * @param globalApplicationState The shared global application state (has the data and map instance in it)
      */
     constructor(globalApplicationState) {
         // Set some class level variables
         this.globalApplicationState = globalApplicationState;
-        const data = globalApplicationState.CLNData
+        const data = globalApplicationState.CLNData;
+        const metVar = globalApplicationState.metVar;
         if (globalApplicationState.brushedRange != null){
             const data = globalApplicationState.brushedRange
         }
@@ -16,7 +17,7 @@ class SweChart {
             width = 700 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
-        const svg = d3.select("#swe-chart")
+        const svg = d3.select("#met-chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -28,7 +29,7 @@ class SweChart {
             .attr("y", -20) // Adjust the y-coordinate to position the title vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "24px") // Adjust the font size as needed
-            .text("Snow Water Equivalent"); // Replace with your desired title text
+            .text(globalApplicationState.metName); // Replace with your desired title text
 
         // Create x-axis label
         svg.append("text")
@@ -45,7 +46,7 @@ class SweChart {
             .attr("y", -40) // Adjust the y-coordinate to position the label vertically
             .attr("text-anchor", "middle") // Center the text horizontally
             .attr("font-size", "14px") // Adjust the font size as needed
-            .text("Accumulation (in)"); // Replace with your y-axis label text
+            .text(globalApplicationState.metAxis); // Replace with your y-axis label text
 
         // Add X axis --> it is a date format
         const x = d3.scaleTime()
@@ -57,7 +58,7 @@ class SweChart {
 
         // Add Y axis
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => +d.Temp)])
+            .domain([0, d3.max(data, d => +d[metVar])])
             .range([height, 0]);
         const yAxis = svg.append("g")
             .call(d3.axisLeft(y));
@@ -84,7 +85,7 @@ class SweChart {
         const areaGenerator = d3.area()
             .x(d => x(d.Time))
             .y0(y(0))
-            .y1(d => y(d.Temp))
+            .y1(d => y(d[metVar]))
 
         // Add the area
         area.append("path")

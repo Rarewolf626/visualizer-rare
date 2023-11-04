@@ -7,9 +7,9 @@ class AccChart {
     constructor(globalApplicationState) {
         // Set some class level variables
         this.globalApplicationState = globalApplicationState;
-        const data = globalApplicationState.DEIDData
-        const accVar = globalApplicationState.accVar
-        const rateVar = globalApplicationState.rateVar
+        const data = globalApplicationState.DEIDData;
+        const accVar = globalApplicationState.accVar;
+        const rateVar = globalApplicationState.rateVar;
         if (globalApplicationState.brushedRange != null){
             const data = globalApplicationState.brushedRange
         }

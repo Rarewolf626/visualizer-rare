@@ -13,7 +13,7 @@
 
 <!--    <script src="js/video.js"></script>-->
     <script src="js/density-chart.js"></script>
-    <script src="js/swe-chart.js"></script>
+    <script src="js/met-chart.js"></script>
     <script src="js/acc-chart.js"></script>
     <script src="js/cursor.js"></script>
     <script src="js/density-height-chart.js"></script>
@@ -27,17 +27,21 @@
     <p>Authors: Alex Blackmer & Grace Liu</p>
 </div>
 <div class = "row1">
-    <p>
-        This is a visualization of data collected by the Differential Emissivity Imaging Disdrometer (DEID).
-        The video below is the raw data collected from the thermal camera focused on the aluminum hotplate.
-        The charts below visualize the data derived from the video file.
-    </p>
-    <p>
+    <div style="width:500px; padding-right:100px;">
+        <p>
+            This is a visualization of data collected by the Differential Emissivity Imaging Disdrometer (DEID).
+            The video to the right is the raw data collected from the thermal camera focused on the aluminum hotplate.
+            The charts below visualize the data derived from the video file.<br/><br/>
+
+            As most formatting is currently hard-coded, please view on desktop and zoom out until the four charts are in two rows.
+        </p>
+    </div>
+    <div>
         <video width="480" height="320" controls class = video>
             <source src="data/DEID-Video.MP4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-    </p>
+    </div>
 </div>
 
 
@@ -56,8 +60,8 @@
         <span>
           <label>Accumulation data to graph (they have almost identical shapes):</label>
           <select id="acc_data">
-            <option selected value="acc_snow">Snow Accumulation (in)</option>
-            <option value="acc_swe">Snow Water Equivalent (in)</option>
+            <option selected value="acc_snow">Snow Accumulation</option>
+            <option value="acc_swe">Snow Water Equivalent</option>
           </select>
         </span>
     </div>
@@ -65,8 +69,10 @@
         <span>
           <label>Meteorological data to graph:</label>
           <select id="met_data">
-            <option selected value="acc_snow">Snow Accumulation (in)</option>
-            <option value="acc_swe">Snow Water Equivalent (in)</option>
+            <option selected value="met_temp">Temperature</option>
+            <option value="met_depth">Snow Depth</option>
+            <option value="met_int">Snow Interval</option>
+            <option value="met_precip">Accumulated Precipitation</option>
           </select>
         </span>
     </div>
@@ -77,7 +83,7 @@
         </svg>
     </div>
     <div class="deid-div">
-        <svg class="deid-chart" id="swe-chart">
+        <svg class="deid-chart" id="met-chart">
         </svg>
     </div>
 </div>

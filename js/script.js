@@ -22,7 +22,10 @@ const globalApplicationState = {
     accVar: "SnowAcc",
     rateVar: "SnowAccRate",
     accChart: null,
-    sweChart: null
+    sweChart: null,
+    metName: "Temperature",
+    metAxis: "Temperature (deg C)",
+    metVar: "Temp"
     // video: null
 };
 
@@ -39,7 +42,7 @@ loadData().then((loadedData) => {
     const densityHeightChart = new DensityHeightChart(globalApplicationState);
     const densityChart = new DensityChart(globalApplicationState);
     const accChart = new AccChart(globalApplicationState);
-    const sweChart = new SweChart(globalApplicationState);
+    const sweChart = new MetChart(globalApplicationState);
     // const cursor = new Cursor()
     // const video = new Video();
 
@@ -51,10 +54,10 @@ loadData().then((loadedData) => {
 
     // Attach event listeners to the toggles
     document.getElementById("acc_data").onchange = changeAccData;
-    // document.getElementById("met_data").onchange = changeMetData;
+    document.getElementById("met_data").onchange = changeMetData;
 
     changeAccData();
-    // changeMetData();
+    changeMetData();
 });
 
 /**
@@ -76,4 +79,32 @@ function changeAccData() {
     svg.selectAll("*").remove();
 
     globalApplicationState.accChart = new AccChart(globalApplicationState);
+}
+
+/**
+ * Update the data according to document settings
+ */
+function changeMetData() {
+    //  Load the file indicated by the select menu
+    const selection = d3.select('#met_data').property('value');
+    globalApplicationState.metName = d3.select('#met_data option:checked').text();
+
+    if (selection === "met_temp") {
+        globalApplicationState.metVar = "Temp";
+        globalApplicationState.metAxis = "Temperature (deg C)";
+    } else if (selection === "met_depth") {
+        globalApplicationState.metVar = "SnowDepth";
+        globalApplicationState.metAxis = "Snow Depth (in)";
+    } else if (selection === "met_int") {
+        globalApplicationState.metVar = "SnowInterval";
+        globalApplicationState.metAxis = "Snow Interval (in)";
+    } else {
+        globalApplicationState.metVar = "PrecipAcc1HR";
+        globalApplicationState.metAxis = "Precipitation 1hr (in)";
+    }
+    // Clear svg
+    let svg = d3.select("#met-chart");
+    svg.selectAll("*").remove();
+
+    globalApplicationState.metChart = new MetChart(globalApplicationState);
 }

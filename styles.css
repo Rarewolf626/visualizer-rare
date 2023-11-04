@@ -15,6 +15,8 @@
     background-color: rgba(0, 0, 0, 0.1); /* Adjust the alpha value (0.5 in this example) for the desired opacity */
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     padding: 5px; /* Add some padding to give space around the text */
     border-style: solid;
     margin: auto auto 10px;

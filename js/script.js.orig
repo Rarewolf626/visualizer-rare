@@ -40,7 +40,7 @@ loadData().then((loadedData) => {
     const densityHeightChart = new DensityHeightChart(globalApplicationState)
     const densityChart = new DensityChart(globalApplicationState);
     const accChart = new AccChart(globalApplicationState);
-    const sweChart = new SweChart(globalApplicationState);
+    const sweChart = new MetChart(globalApplicationState);
     // const cursor = new Cursor()
     const video = new Video()
 
