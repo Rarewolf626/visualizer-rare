@@ -7,6 +7,9 @@ async function loadData() {
     for (let obj of DEIDData) {
         obj.Time = parseTime(obj.Time);
     }
+    for (let obj of CLNData) {
+        obj.Time = parseTime(obj.Time);
+    }
     return {DEIDData, CLNData};
 }
 

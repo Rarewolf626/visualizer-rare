@@ -7,7 +7,7 @@ class SweChart {
     constructor(globalApplicationState) {
         // Set some class level variables
         this.globalApplicationState = globalApplicationState;
-        const data = globalApplicationState.DEIDData
+        const data = globalApplicationState.CLNData
         if (globalApplicationState.brushedRange != null){
             const data = globalApplicationState.brushedRange
         }
@@ -47,15 +47,6 @@ class SweChart {
             .attr("font-size", "14px") // Adjust the font size as needed
             .text("Accumulation (in)"); // Replace with your y-axis label text
 
-        // Create right y-axis label
-        svg.append("text")
-            .attr("transform", "rotate(90)") // Rotate the label to be vertical
-            .attr("x", 180) // Adjust the x-coordinate to center the label as needed
-            .attr("y", -600) // Adjust the y-coordinate to position the label vertically
-            .attr("text-anchor", "middle") // Center the text horizontally
-            .attr("font-size", "14px") // Adjust the font size as needed
-            .text("Rate (in/min)"); // Replace with your y-axis label text
-
         // Add X axis --> it is a date format
         const x = d3.scaleTime()
             .domain(d3.extent(data, d => d.Time))
@@ -66,18 +57,10 @@ class SweChart {
 
         // Add Y axis
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => +d.SWE)])
+            .domain([0, d3.max(data, d => +d.Temp)])
             .range([height, 0]);
         const yAxis = svg.append("g")
             .call(d3.axisLeft(y));
-
-        // Add second Y axis
-        const y2 = d3.scaleLinear()
-            .domain([0, d3.max(data, d => +d.SWEAccRate)])
-            .range([height, 0]);
-        const y2Axis = svg.append("g")
-            .attr('transform', 'translate(' + width + ', 0)') // Move it to the right side
-            .call(d3.axisRight(y2));
 
         // Add a clipPath: everything out of this area won't be drawn.
         const clip = svg.append("defs").append("clipPath")
@@ -101,7 +84,7 @@ class SweChart {
         const areaGenerator = d3.area()
             .x(d => x(d.Time))
             .y0(y(0))
-            .y1(d => y(d.SWE))
+            .y1(d => y(d.Temp))
 
         // Add the area
         area.append("path")
@@ -112,15 +95,6 @@ class SweChart {
             .attr("stroke", "black")
             .attr("stroke-width", 1)
             .attr("d", areaGenerator)
-
-        // Scatterplot of accumulation rate
-        area.selectAll("circle")
-            .data(data)
-            .join("circle")
-            .attr("cx", d => x(d.Time))
-            .attr("cy", d => y2(d.SWEAccRate))
-            .attr("r", 2)
-            .style("fill", "steelblue");
 
         // Add the brushing
         area
@@ -156,11 +130,6 @@ class SweChart {
                 .transition()
                 .duration(1000)
                 .attr("d", areaGenerator)
-            area
-                .selectAll("circle")
-                .transition().duration(1000)
-                .attr("cx", function (d) { return x(d.Time); } )
-                .attr("cy", function (d) { return y2(d.SWEAccRate); } )
         }
 
         // If user double click, reinitialize the chart
@@ -171,11 +140,6 @@ class SweChart {
                 .select('.myArea')
                 .transition()
                 .attr("d", areaGenerator)
-            area
-                .selectAll("circle")
-                .transition()
-                .attr("cx", function (d) { return x(d.Time); } )
-                .attr("cy", function (d) { return y2(d.SWEAccRate); } )
         });
     }
 }
