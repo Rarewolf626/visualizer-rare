@@ -5,8 +5,6 @@ class MetChart {
      * @param globalApplicationState The shared global application state (has the data and map instance in it)
      */
     constructor(globalApplicationState) {
-        const cursorMC = new Cursor()
-
         // Set some class level variables
         this.globalApplicationState = globalApplicationState;
         const data = globalApplicationState.CLNData;
@@ -112,9 +110,10 @@ class MetChart {
             idleTimeout = null;
         }
 
+        const cursorMC = new Cursor("#met");
         // A function that update the chart for given boundaries
         function updateChart(event) {
-            cursorMC.updateText("Double Click to Zoom Out");
+            cursorMC.updateText("#met", "Double Click to Zoom Out");
             // What are the selected boundaries?
             const extent = event.selection
 
@@ -144,7 +143,7 @@ class MetChart {
                 .select('.myArea')
                 .transition()
                 .attr("d", areaGenerator)
-            cursorMC.updateText("Drag to Zoom");
+            cursorMC.updateText("#met", "Drag to Zoom");
         });
     }
 }

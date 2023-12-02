@@ -109,8 +109,10 @@ class DensityChart {
             idleTimeout = null;
         }
 
+        const cursorDC = new Cursor("#density");
         // A function that update the chart for given boundaries
         function updateChart(event) {
+            cursorDC.updateText("#density", "Double Click to Zoom Out");
 
             // What are the selected boundaries?
             const extent = event.selection
@@ -141,6 +143,7 @@ class DensityChart {
                 .select('.myArea')
                 .transition()
                 .attr("d", areaGenerator)
+            cursorDC.updateText("#density", "Drag to Zoom");
         });
     }
 }
