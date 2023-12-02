@@ -5,8 +5,6 @@ class AccChart {
      * @param globalApplicationState The shared global application state (has the data and map instance in it)
      */
     constructor(globalApplicationState) {
-        const cursorAC = new Cursor()
-
         // Set some class level variables
         this.globalApplicationState = globalApplicationState;
         const data = globalApplicationState.DEIDData;
@@ -138,9 +136,10 @@ class AccChart {
             idleTimeout = null;
         }
 
+        const cursorAC = new Cursor("#acc");
         // A function that update the chart for given boundaries
         function updateChart(event) {
-            cursorAC.updateText("Double Click to Zoom Out");
+            cursorAC.updateText("#acc", "Double Click to Zoom Out");
             // What are the selected boundaries?
             const extent = event.selection
             // If no selection, back to initial coordinate. Otherwise, update X axis domain
@@ -179,7 +178,7 @@ class AccChart {
                 .transition()
                 .attr("cx", function (d) { return x(d.Time); } )
                 .attr("cy", function (d) { return y2(d[rateVar]); } )
-            cursorAC.updateText("Drag to Zoom");
+            cursorAC.updateText("#acc", "Drag to Zoom");
         });
     }
 }

@@ -77,6 +77,11 @@ function changeAccData() {
     svg.selectAll("*").remove();
 
     globalApplicationState.accChart = new AccChart(globalApplicationState);
+
+    // const charts = d3.selectAll('#met-chart .brush');
+    // charts.each(function() {
+    //     console.log(".brush selected");
+    // });
 }
 
 /**
