@@ -5,6 +5,8 @@ class AccChart {
      * @param globalApplicationState The shared global application state (has the data and map instance in it)
      */
     constructor(globalApplicationState) {
+        const cursorAC = new Cursor()
+
         // Set some class level variables
         this.globalApplicationState = globalApplicationState;
         const data = globalApplicationState.DEIDData;
@@ -93,7 +95,7 @@ class AccChart {
         // Add brushing
         const brush = d3.brushX()                   // Add the brush feature using the d3.brush function
             .extent([[0, 0], [width, height]])  // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
-            .on("end", updateChart)               // Each time the brush selection changes, trigger the 'updateChart' function
+            .on("end", updateChart)// Each time the brush selection changes, trigger the 'updateChart' function
 
         // Create the area variable: where both the area and the brush take place
         const area = svg.append('g')
@@ -110,7 +112,7 @@ class AccChart {
             .datum(data)
             .attr("class", "myArea")  // I add the class myArea to be able to modify it later on.
             .attr("fill", "#69b3a2")
-            .attr("fill-opacity", .3)
+            .attr("fill-opacity", 0)
             .attr("stroke", "black")
             .attr("stroke-width", 1)
             .attr("d", areaGenerator)
@@ -138,6 +140,7 @@ class AccChart {
 
         // A function that update the chart for given boundaries
         function updateChart(event) {
+            cursorAC.updateText("Double Click to Zoom Out");
             // What are the selected boundaries?
             const extent = event.selection
             // If no selection, back to initial coordinate. Otherwise, update X axis domain
@@ -176,6 +179,7 @@ class AccChart {
                 .transition()
                 .attr("cx", function (d) { return x(d.Time); } )
                 .attr("cy", function (d) { return y2(d[rateVar]); } )
+            cursorAC.updateText("Drag to Zoom");
         });
     }
 }

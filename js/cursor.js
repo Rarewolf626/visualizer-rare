@@ -1,35 +1,48 @@
 
 class Cursor{
     constructor() {
-        const svg = d3.selectAll('.deid-chart');
+        const charts = d3.selectAll('.deid-chart');
+        charts.each(function(){
+            const svg = d3.select(this);
+            // Create the text element for this specific 'deid-chart'
+            const textElement = svg
+                .append('text')
+                .attr('class', 'cursor-text')
+                .style('display', 'none')
+                .text('Drag to Zoom');
 
-        // Create the text element initially
-        const textElement = svg
-            .append('text')
-            .attr('class', 'cursor-background cursor-text')
-            .style('display', 'none')
-            .text('Drag to Zoom');
+            // Add event listeners specific to this 'deid-chart' instance
+            svg.on('mousemove', onMouseMove);
+            svg.on('mouseout', onMouseOut);
 
-        // Add event listeners
-        svg.on('mousemove', onMouseMove);
-        svg.on('mouseout', onMouseOut);
+            function onMouseMove(event) {
+                // Get the mouse coordinates
+                const [x, y] = d3.pointer(event, svg.node()); // Pass the 'deid-chart' SVG node
 
-        function onMouseMove(event) {
-            // Get the mouse coordinates
-            const [x, y] = d3.pointer(event);
+                // Update the text position for this specific 'deid-chart' instance
+                updatePosition(x + 10, y - 10);
+            }
 
-            // Update the text position
-            updateText(x+10, y-10);
-        }
+            function onMouseOut() {
+                // Hide the text when the mouse leaves the specific 'deid-chart' container
+                textElement.style('display', 'none');
+            }
 
-        function onMouseOut() {
-            // Hide the text when the mouse leaves the SVG container
-            textElement.style('display', 'none');
-        }
+            function updatePosition(x, y) {
+                // Update the text position and make it visible for this specific 'deid-chart' instance
+                textElement.attr('x', x).attr('y', y).style('display', 'block');
+            }
+        });
+    }
+    updateText(text) {
+        const charts = d3.selectAll('.deid-chart');
+        charts.each(function(){
+            const svg = d3.select(this);
+            // Find the text element within the deid-chart
+            const textElement = svg.select('.cursor-text');
 
-        function updateText(x, y) {
-            // Update the text position and make it visible
-            textElement.attr('x', x).attr('y', y).style('display', 'block');
-        }
+            // Change the text based on the graph update
+            textElement.text(text); // Change this line to update with relevant information
+        });
     }
 }

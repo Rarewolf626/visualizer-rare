@@ -88,7 +88,7 @@ class DensityHeightChart {
             .datum(data)
             .attr("class", "myArea")  // I add the class myArea to be able to modify it later on.
             .attr("fill", "#69b3a2")
-            .attr("fill-opacity", .3)
+            .attr("fill-opacity", 0)
             .attr("stroke", "black")
             .attr("stroke-width", 1)
             .attr("d", areaGenerator)
