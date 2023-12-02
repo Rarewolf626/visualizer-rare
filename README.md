@@ -9,4 +9,4 @@ Code is in /js, /resources, index.html, styles.css.
 
 Project deployment: https://dataviscourse2023.github.io/final-project-snowflakes/
 
-Screencast video: 
+Screencast video: https://youtu.be/Sh-2idBsmFY
