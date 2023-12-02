@@ -1,4 +1,3 @@
-# DEID Visualization Project
 # Exploring Snowfall Data Captured by the Differential Emissivity Imaging Disdrometer
 
 ## DS-4630 / CS-5630 / CS-6630
