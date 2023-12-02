@@ -100,10 +100,10 @@ function changeMetData() {
         globalApplicationState.metAxis = "Snow Depth (in)";
     } else if (selection === "met_int") {
         globalApplicationState.metVar = "SnowInterval";
-        globalApplicationState.metAxis = "Snow Interval (in)";
+        globalApplicationState.metAxis = "Accumulation (in)";
     } else {
         globalApplicationState.metVar = "PrecipAcc1HR";
-        globalApplicationState.metAxis = "Precipitation 1hr (in)";
+        globalApplicationState.metAxis = "SWE Accumulation (in)";
     }
     // Clear svg
     let svg = d3.select("#met-chart");
