@@ -11,4 +11,4 @@ Project deployment: https://dataviscourse2023.github.io/final-project-snowflakes
 
 Screencast video:
 
-[![Project video](https://img.youtube.com/vi/Sh-2idBsmFY/0.jpg)](https://www.youtube.com/watch?v=Sh-2idBsmFY)
+[![Project video](https://img.youtube.com/vi/Sh-2idBsmFY/0.jpg)](https://www.youtube.com/embed/Sh-2idBsmFY)
