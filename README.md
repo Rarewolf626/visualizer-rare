@@ -7,7 +7,7 @@ DEID and MesoWest data are in /data.
 Project reports are in /reports.
 Code is in /js, /resources, index.html, styles.css.
 
-Project deployment: https://dataviscourse2023.github.io/final-project-snowflakes/
+Project deployment: https://alexblackmer.github.io/DEID-Visualizer/
 
 Screencast video:
 
